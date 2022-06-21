@@ -7,7 +7,7 @@ namespace EShop.Product.Api.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly IMongoDatabase _database;
-        private IMongoCollection<CreateProduct> _collection;
+        private readonly IMongoCollection<CreateProduct> _collection;
         public ProductRepository(IMongoDatabase database)
         {
             _database = database;
