@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
 namespace EShop.Infrastructure.Mongo
@@ -16,7 +15,7 @@ namespace EShop.Infrastructure.Mongo
                 return mongoClient.GetDatabase(mongoConfig.Database);
             });
 
-            // services.AddSingleton<IDatabaseInitializer, MongoInitializer>();
+            services.AddSingleton<IDatabaseInitializer, MongoInitializer>();
         }
     }
 }

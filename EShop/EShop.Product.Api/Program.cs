@@ -17,6 +17,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
+var dbInitializerAsync = app.Services.GetService<IDatabaseInitializer>();
+dbInitializerAsync.InitializeAsync();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
