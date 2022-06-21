@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.ApiGateway", "EShop.ApiGateway\EShop.ApiGateway.csproj", "{25AA205A-CF6E-46BA-8A2D-10C7D743D582}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.User.Api", "EShop.User.Api\EShop.User.Api.csproj", "{26797ACB-8866-483A-8D96-843A6822B34E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{25AA205A-CF6E-46BA-8A2D-10C7D743D582}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25AA205A-CF6E-46BA-8A2D-10C7D743D582}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25AA205A-CF6E-46BA-8A2D-10C7D743D582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26797ACB-8866-483A-8D96-843A6822B34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26797ACB-8866-483A-8D96-843A6822B34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26797ACB-8866-483A-8D96-843A6822B34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26797ACB-8866-483A-8D96-843A6822B34E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
