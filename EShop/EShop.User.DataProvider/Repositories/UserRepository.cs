@@ -2,7 +2,7 @@
 using EShop.Infrastructure.Event.User;
 using MongoDB.Driver;
 
-namespace EShop.User.Api.Repositories
+namespace EShop.User.DataProvider.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -28,14 +28,19 @@ namespace EShop.User.Api.Repositories
 
         public async Task<UserCreated> GetUser(CreateUser user)
         {
-            var userResult = _collection.AsQueryable().Where(x => x.Username == user.Username).FirstOrDefault();
+            var userResult = _collection.AsQueryable().Where(usr => usr.Username == user.Username).FirstOrDefault();
+
             await Task.CompletedTask;
+
+            if (userResult == null)
+                return null;
+
             return new UserCreated()
             {
+                Username = userResult.Username,
                 ContactNo = userResult.ContactNo,
                 EmailId = userResult.EmailId,
                 Password = userResult.Password,
-                Username = userResult.Username,
                 UserId = userResult.UserId
             };
         }

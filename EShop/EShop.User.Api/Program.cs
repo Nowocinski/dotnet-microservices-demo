@@ -1,8 +1,9 @@
 using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
+using EShop.Infrastructure.Security;
 using EShop.User.Api.Handlers;
-using EShop.User.Api.Repositories;
-using EShop.User.Api.Services;
+using EShop.User.DataProvider.Repositories;
+using EShop.User.DataProvider.Services;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoC
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CreateUserHandler>();
+builder.Services.AddSingleton<IEncrypter, Encrypter>();
 
 var rabbitMQOption = builder.Configuration.GetSection("rabbitmq").Get<RabbitMQOption>();
 builder.Services.AddMassTransit(x =>

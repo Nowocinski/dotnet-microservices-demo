@@ -1,7 +1,7 @@
 ﻿using EShop.Infrastructure.Command.User;
 using EShop.Infrastructure.Event.User;
 
-namespace EShop.User.Api.Services
+namespace EShop.User.DataProvider.Services
 {
     public interface IUserService
     {

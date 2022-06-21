@@ -1,7 +1,7 @@
 ﻿using EShop.Infrastructure.Command.User;
 using EShop.Infrastructure.Event.User;
 
-namespace EShop.User.Api.Repositories
+namespace EShop.User.DataProvider.Repositories
 {
     public interface IUserRepository
     {
