@@ -1,6 +1,9 @@
+using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
+using EShop.User.Api.Handlers;
 using EShop.User.Api.Repositories;
 using EShop.User.Api.Services;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +17,35 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<CreateUserHandler>();
+
+var rabbitMQOption = builder.Configuration.GetSection("rabbitmq").Get<RabbitMQOption>();
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateUserHandler>();
+    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+    {
+        cfg.Host(new Uri(rabbitMQOption.ConnectionString), hostcfg =>
+        {
+            hostcfg.Username(rabbitMQOption.Username);
+            hostcfg.Password(rabbitMQOption.Password);
+        });
+        cfg.ReceiveEndpoint("add_user", endPoint =>
+        {
+            endPoint.PrefetchCount = 16;
+            endPoint.UseMessageRetry(retryConfig =>
+            {
+                retryConfig.Interval(2, 100);
+            });
+            endPoint.ConfigureConsumer<CreateUserHandler>(provider);
+        });
+    }));
+});
 
 var app = builder.Build();
+
+var busControl = app.Services.GetService<IBusControl>();
+busControl.Start();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
