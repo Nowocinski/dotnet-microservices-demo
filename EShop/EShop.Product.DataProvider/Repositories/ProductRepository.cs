@@ -2,7 +2,7 @@
 using EShop.Infrastructure.Event.Product;
 using MongoDB.Driver;
 
-namespace EShop.Product.Api.Repositories
+namespace EShop.Product.DataProvider.Repositories
 {
     public class ProductRepository : IProductRepository
     {

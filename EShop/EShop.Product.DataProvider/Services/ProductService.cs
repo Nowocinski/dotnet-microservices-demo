@@ -1,8 +1,8 @@
 ﻿using EShop.Infrastructure.Command.Product;
 using EShop.Infrastructure.Event.Product;
-using EShop.Product.Api.Repositories;
+using EShop.Product.DataProvider.Repositories;
 
-namespace EShop.Product.Api.Services
+namespace EShop.Product.DataProvider.Services
 {
     public class ProductService : IProductService
     {

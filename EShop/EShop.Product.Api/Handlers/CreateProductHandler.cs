@@ -1,5 +1,5 @@
 ﻿using EShop.Infrastructure.Command.Product;
-using EShop.Product.Api.Services;
+using EShop.Product.DataProvider.Services;
 using MassTransit;
 
 namespace EShop.Product.Api.Handlers

@@ -1,5 +1,5 @@
 ﻿using EShop.Infrastructure.Command.Product;
-using EShop.Product.Api.Services;
+using EShop.Product.DataProvider.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.Product.Api.Controllers

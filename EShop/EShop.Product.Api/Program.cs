@@ -1,8 +1,8 @@
 using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
 using EShop.Product.Api.Handlers;
-using EShop.Product.Api.Repositories;
-using EShop.Product.Api.Services;
+using EShop.Product.DataProvider.Repositories;
+using EShop.Product.DataProvider.Services;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);

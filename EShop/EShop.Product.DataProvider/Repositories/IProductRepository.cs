@@ -1,7 +1,7 @@
 ﻿using EShop.Infrastructure.Command.Product;
 using EShop.Infrastructure.Event.Product;
 
-namespace EShop.Product.Api.Repositories
+namespace EShop.Product.DataProvider.Repositories
 {
     public interface IProductRepository
     {
