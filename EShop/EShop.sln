@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.ApiGateway", "EShop.ApiGateway\EShop.ApiGateway.csproj", "{25AA205A-CF6E-46BA-8A2D-10C7D743D582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.ApiGateway", "EShop.ApiGateway\EShop.ApiGateway.csproj", "{25AA205A-CF6E-46BA-8A2D-10C7D743D582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.User.Api", "EShop.User.Api\EShop.User.Api.csproj", "{26797ACB-8866-483A-8D96-843A6822B34E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.User.Api", "EShop.User.Api\EShop.User.Api.csproj", "{26797ACB-8866-483A-8D96-843A6822B34E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Product.Api", "EShop.Product.Api\EShop.Product.Api.csproj", "{040A3B0F-7426-4089-8E94-80122DA2E4F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Product.Api", "EShop.Product.Api\EShop.Product.Api.csproj", "{040A3B0F-7426-4089-8E94-80122DA2E4F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Order.Api", "EShop.Order.Api\EShop.Order.Api.csproj", "{1A5CCF21-FDCB-4399-B50A-D0BA7EC3169B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Order.Api", "EShop.Order.Api\EShop.Order.Api.csproj", "{1A5CCF21-FDCB-4399-B50A-D0BA7EC3169B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Infrastructure", "EShop.Infrastructure\EShop.Infrastructure.csproj", "{115B87A8-A485-4F2E-AF77-6DD063C1D71E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Infrastructure", "EShop.Infrastructure\EShop.Infrastructure.csproj", "{115B87A8-A485-4F2E-AF77-6DD063C1D71E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Product.Query.Api", "EShop.Product.Query.Api\EShop.Product.Query.Api.csproj", "{BF7E54AD-9375-440A-BF92-D8EA5BF6CBC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{115B87A8-A485-4F2E-AF77-6DD063C1D71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{115B87A8-A485-4F2E-AF77-6DD063C1D71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{115B87A8-A485-4F2E-AF77-6DD063C1D71E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7E54AD-9375-440A-BF92-D8EA5BF6CBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7E54AD-9375-440A-BF92-D8EA5BF6CBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7E54AD-9375-440A-BF92-D8EA5BF6CBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7E54AD-9375-440A-BF92-D8EA5BF6CBC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
