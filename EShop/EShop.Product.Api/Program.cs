@@ -44,7 +44,7 @@ builder.Services.AddMassTransit(x =>
 var app = builder.Build();
 
 var dbInitializerAsync = app.Services.GetService<IDatabaseInitializer>();
-dbInitializerAsync.InitializeAsync();
+await dbInitializerAsync.InitializeAsync();
 
 var busControl = app.Services.GetService<IBusControl>();
 busControl.Start();

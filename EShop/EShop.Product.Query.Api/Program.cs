@@ -38,7 +38,7 @@ var bus = app.Services.GetService<IBusControl>();
 bus.Start();
 
 var dbInitializerAsync = app.Services.GetService<IDatabaseInitializer>();
-dbInitializerAsync.InitializeAsync();
+await dbInitializerAsync.InitializeAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
