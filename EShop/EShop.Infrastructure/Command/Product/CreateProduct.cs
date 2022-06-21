@@ -1,7 +1,11 @@
-﻿namespace EShop.Infrastructure.Command.Product
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace EShop.Infrastructure.Command.Product
 {
     public class CreateProduct
     {
+        [BsonId]
+        //[BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public Guid ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }

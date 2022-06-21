@@ -6,14 +6,8 @@ namespace EShop.Infrastructure.Mongo
 {
     public static class Extension
     {
-        public static void AddMongoDb(this IServiceCollection services, IConfiguration configuration)
+        public static void AddMongoDb(this IServiceCollection services, MongoConfig mongoConfig)
         {
-            var configSection = configuration.GetSection("mongo");
-
-            // var mongoConfig = new MongoConfig();
-            // configSection.Bind(mongoConfig);
-            MongoConfig mongoConfig = configSection.GetSection("mongo") as MongoConfig;
-
             services.AddSingleton<IMongoClient>(client => {
                 return new MongoClient(mongoConfig.ConnectionString);
             });
