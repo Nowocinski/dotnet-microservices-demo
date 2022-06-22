@@ -7,5 +7,6 @@ namespace EShop.User.DataProvider.Services
     {
         Task<UserCreated> AddUser(CreateUser user);
         Task<UserCreated> GetUser(CreateUser user);
+        Task<UserCreated> GetUserByUsername(string name);
     }
 }

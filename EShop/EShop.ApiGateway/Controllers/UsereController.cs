@@ -1,4 +1,5 @@
 ﻿using EShop.Infrastructure.Command.User;
+using EShop.Infrastructure.Event.User;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,14 @@ namespace EShop.ApiGateway.Controllers
     public class UsereController : Controller
     {
         private readonly IBusControl _busControl;
-        public UsereController(IBusControl busControl)
+        private readonly IRequestClient<LoginUser> _loginRequestClient;
+        public UsereController(IBusControl busControl, IRequestClient<LoginUser> loginRequestClient)
         {
             _busControl = busControl;
+            _loginRequestClient = loginRequestClient;
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add([FromForm] CreateUser user)
         {
             var uri = new Uri("rabbitmq://localhost/add_user");
@@ -21,6 +24,13 @@ namespace EShop.ApiGateway.Controllers
             await endPoint.Send(user);
 
             return Accepted("User Created");
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromForm] LoginUser loginUser)
+        {
+            var userResponse = await _loginRequestClient.GetResponse<UserCreated>(loginUser);
+            return Accepted(userResponse.Message);
         }
     }
 }

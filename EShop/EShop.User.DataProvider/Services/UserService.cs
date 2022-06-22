@@ -1,7 +1,7 @@
 ﻿using EShop.Infrastructure.Command.User;
 using EShop.Infrastructure.Event.User;
 using EShop.Infrastructure.Security;
-using EShop.User.Api.Extension;
+using EShop.User.DataProvider.Extension;
 using EShop.User.DataProvider.Repositories;
 
 namespace EShop.User.DataProvider.Services
@@ -34,6 +34,11 @@ namespace EShop.User.DataProvider.Services
         public async Task<UserCreated> GetUser(CreateUser user)
         {
             return await _userRepository.GetUser(user);
+        }
+
+        public async Task<UserCreated> GetUserByUsername(string name)
+        {
+            return await _userRepository.GetUserByUsername(name);
         }
     }
 }

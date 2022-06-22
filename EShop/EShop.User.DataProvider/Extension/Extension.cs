@@ -1,7 +1,8 @@
 ﻿using EShop.Infrastructure.Command.User;
+using EShop.Infrastructure.Event.User;
 using EShop.Infrastructure.Security;
 
-namespace EShop.User.Api.Extension
+namespace EShop.User.DataProvider.Extension
 {
     public static class Extension
     {
@@ -13,10 +14,10 @@ namespace EShop.User.Api.Extension
             return user;
         }
 
-        public static bool ValidatePassword(this CreateUser user, CreateUser savedUser, IEncrypter encrypter)
+        public static bool ValidatePassword(this UserCreated userCreated, LoginUser user, IEncrypter encrypter)
         {
             var pswd = encrypter.GetHash(user.Password, encrypter.GetSalt());
-            return user.Password.Equals(pswd);
+            return userCreated.Password.Equals(pswd);
         }
     }
 }

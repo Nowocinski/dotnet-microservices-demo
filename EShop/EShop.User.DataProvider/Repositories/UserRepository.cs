@@ -44,5 +44,24 @@ namespace EShop.User.DataProvider.Repositories
                 UserId = userResult.UserId
             };
         }
+
+        public async Task<UserCreated> GetUserByUsername(string name)
+        {
+            var userResult = _collection.AsQueryable().Where(usr => usr.Username == name).FirstOrDefault();
+
+            await Task.CompletedTask;
+
+            if (userResult == null)
+                return null;
+
+            return new UserCreated()
+            {
+                Username = userResult.Username,
+                ContactNo = userResult.ContactNo,
+                EmailId = userResult.EmailId,
+                Password = userResult.Password,
+                UserId = userResult.UserId
+            };
+        }
     }
 }
