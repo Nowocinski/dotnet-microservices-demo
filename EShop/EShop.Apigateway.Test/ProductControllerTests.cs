@@ -52,46 +52,52 @@ namespace EShop.Apigateway.Test
     [TestFixture]
     public class ProductControllerTests
     {
+        ProductController controller = null;
+
         [SetUp]
         public void Setup()
         {
+            var sendEndpoint = new Mock<ISendEndpoint>();
+
+            var busControl = new Mock<IBusControl>();
+            busControl.Setup(x => x.GetSendEndpoint(It.IsAny<Uri>()))
+                .ReturnsAsync(sendEndpoint.Object);
+
+            var deriveResponse = new Mock<DerivedClass>();
+
+            var requestClient = new Mock<IRequestClient<GetProductById>>();
+            requestClient.Setup(x => x.GetResponse<ProductCreated>(It.IsAny<GetProductById>(),
+                                                   It.IsAny<CancellationToken>(),
+                                                   It.IsAny<RequestTimeout>()))
+                .ReturnsAsync(deriveResponse.Object);
+
+
+            controller = new ProductController(busControl.Object, requestClient.Object);
         }
 
         [Test]
         public async Task Add()
         {
-            // Arrange
-            var sendEndpoint = new Mock<ISendEndpoint>();
-            var busControl = new Mock<IBusControl>();
-            busControl.Setup(x => x.GetSendEndpoint(It.IsAny<Uri>()))
-                .ReturnsAsync(sendEndpoint.Object);
-            var productController = new ProductController(busControl.Object, null);
-
             // Act
-            var result = await productController.Add(It.IsAny<CreateProduct>());
+            var result = await controller.Add(It.IsAny<CreateProduct>());
 
             // Assert
-            Assert.That(((AcceptedResult)result).StatusCode, Is.EqualTo((int?)HttpStatusCode.Accepted));
+            Assert.IsTrue((result as AcceptedResult).StatusCode == (int?)HttpStatusCode.Accepted);
         }
 
         [Test]
         public async Task GetProductReturnsProductWithAcceptedResult()
         {
-            // Arrange
+            // Arrange 
             var expectedProduct = new ProductCreated()
             {
                 ProductId = new Guid("a159d2f9-f975-4e01-93c4-08a01d749151"),
                 ProductName = "testing product",
                 CreatedAt = DateTime.UtcNow
             };
-            var deriveResponse = new Mock<DerivedClass>();
-            var requestClient = new Mock<IRequestClient<GetProductById>>();
-            requestClient.Setup(x => x.GetResponse<ProductCreated>(It.IsAny<GetProductById>(), It.IsAny<CancellationToken>(), It.IsAny<RequestTimeout>()))
-                .ReturnsAsync(deriveResponse.Object);
-            var productController = new ProductController(null, requestClient.Object);
 
             // Act
-            var result = await productController.Get(new Guid("a159d2f9-f975-4e01-93c4-08a01d749151"));
+            var result = await controller.Get(new Guid("a159d2f9-f975-4e01-93c4-08a01d749151"));
 
             // Assert
             Assert.IsTrue((result as AcceptedResult).StatusCode == (int?)HttpStatusCode.Accepted);
