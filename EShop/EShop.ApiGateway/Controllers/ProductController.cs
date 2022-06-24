@@ -2,12 +2,15 @@
 using EShop.Infrastructure.Event.Product;
 using EShop.Infrastructure.Query.Product;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.ApiGateway.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly IBusControl _busControl;
         private readonly IRequestClient<GetProductById> _requestClient;
@@ -29,7 +32,8 @@ namespace EShop.ApiGateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm] CreateProduct product)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Add([FromBody] CreateProduct product)
         {
             var uri = new Uri("rabbitmq://localhost/create_product");
             var endPoint = await _busControl.GetSendEndpoint(uri);

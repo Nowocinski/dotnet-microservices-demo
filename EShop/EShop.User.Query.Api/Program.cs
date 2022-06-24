@@ -1,3 +1,4 @@
+using EShop.Infrastructure.Authentication;
 using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
 using EShop.Infrastructure.Security;
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IEncrypter, Encrypter>();
 builder.Services.AddSingleton<LoginUserHangler>();
+builder.Services.AddJwt(builder.Configuration);
 
 builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
 var rabbitMQOption = builder.Configuration.GetSection("rabbitmq").Get<RabbitMQOption>();
@@ -48,6 +50,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
