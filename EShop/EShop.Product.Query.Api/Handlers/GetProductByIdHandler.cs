@@ -13,6 +13,7 @@ namespace EShop.Product.Query.Api.Handlers
         }
         public async Task Consume(ConsumeContext<GetProductById> context)
         {
+            throw new Exception("something was wrong!...");
             var product = await _productService.GetProduct(context.Message.ProductId);
             await context.RespondAsync(product);
         }

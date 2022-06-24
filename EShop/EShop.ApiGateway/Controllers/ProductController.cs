@@ -5,6 +5,8 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Polly;
+using Polly.Fallback;
 
 namespace EShop.ApiGateway.Controllers
 {
@@ -14,21 +16,26 @@ namespace EShop.ApiGateway.Controllers
     {
         private readonly IBusControl _busControl;
         private readonly IRequestClient<GetProductById> _requestClient;
+        private readonly AsyncFallbackPolicy<IActionResult> _fallbackPolicy;
         public ProductController(IBusControl busControl, IRequestClient<GetProductById> requestClient)
         {
             _busControl = busControl;
             _requestClient = requestClient;
+            _fallbackPolicy = Policy<IActionResult>.Handle<Exception>().FallbackAsync(Content("We are experincing issue. Please try after sometime."));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(Guid productId)
         {
-            var prdct = new GetProductById()
+            return await _fallbackPolicy.ExecuteAsync(async () =>
             {
-                ProductId = productId
-            };
-            var product = await _requestClient.GetResponse<ProductCreated>(prdct);
-            return Accepted(product);
+                var prdct = new GetProductById()
+                {
+                    ProductId = productId
+                };
+                var product = await _requestClient.GetResponse<ProductCreated>(prdct);
+                return Accepted(product);
+            });
         }
 
         [HttpPost]
