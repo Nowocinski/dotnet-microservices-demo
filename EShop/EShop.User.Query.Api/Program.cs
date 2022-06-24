@@ -18,14 +18,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IEncrypter, Encrypter>();
-builder.Services.AddSingleton<LoginUserHangler>();
+builder.Services.AddSingleton<LoginUserHandler>();
 builder.Services.AddJwt(builder.Configuration);
 
 builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
 var rabbitMQOption = builder.Configuration.GetSection("rabbitmq").Get<RabbitMQOption>();
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<LoginUserHangler>();
+    x.AddConsumer<LoginUserHandler>();
     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
     {
         cfg.Host(new Uri(rabbitMQOption.ConnectionString), hostcfg =>

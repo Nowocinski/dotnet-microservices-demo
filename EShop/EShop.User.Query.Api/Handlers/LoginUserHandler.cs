@@ -1,6 +1,5 @@
 ﻿using EShop.Infrastructure.Authentication;
 using EShop.Infrastructure.Command.User;
-using EShop.Infrastructure.Event.User;
 using EShop.User.DataProvider.Extension;
 using EShop.User.DataProvider.Services;
 using MassTransit;
@@ -8,12 +7,12 @@ using MassTransit;
 namespace EShop.User.Query.Api.Handlers
 {
     using EShop.Infrastructure.Security;
-    public class LoginUserHangler : IConsumer<LoginUser>
+    public class LoginUserHandler : IConsumer<LoginUser>
     {
         private readonly IUserService _userService;
         private readonly IEncrypter _encrypter;
         private readonly IAuthenticationHandler _authHandler;
-        public LoginUserHangler(IUserService userService, IEncrypter encrypter, IAuthenticationHandler authHandler)
+        public LoginUserHandler(IUserService userService, IEncrypter encrypter, IAuthenticationHandler authHandler)
         {
             _userService = userService;
             _encrypter = encrypter;
