@@ -1,7 +1,11 @@
-﻿namespace EShop.Infrastructure.Order
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace EShop.Infrastructure.Order
 {
     public class Order
     {
+        [BsonId]
+        public Guid Id { get; set; }
         public string OrderId { get; set; }
         public string UserId { get; set; }
         public List<OrderItem> Items { get; set; }

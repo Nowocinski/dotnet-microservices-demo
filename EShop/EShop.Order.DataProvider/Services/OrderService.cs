@@ -11,6 +11,7 @@ namespace EShop.Order.DataProvider.Services
         }
         public async Task<bool> CreateOrder(Infrastructure.Order.Order order)
         {
+            order.Id = Guid.NewGuid();
             return await _orderRepository.CreateOrder(order);
         }
 

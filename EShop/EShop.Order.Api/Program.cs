@@ -1,6 +1,8 @@
 using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
 using EShop.Order.Api.Handlers;
+using EShop.Order.DataProvider.Repository;
+using EShop.Order.DataProvider.Services;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// DI
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 // MongoDB
 builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
 // RabbitMQ and MassTransit
