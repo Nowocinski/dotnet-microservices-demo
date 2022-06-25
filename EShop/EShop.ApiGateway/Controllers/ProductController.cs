@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Polly;
+using Polly.Bulkhead;
 using Polly.CircuitBreaker;
 using Polly.Fallback;
 using Polly.Retry;
@@ -23,6 +24,7 @@ namespace EShop.ApiGateway.Controllers
         #region Policies
         // Do obsługi wyłączenia serwera, kiedy zaczyna rzucać wyjątkami
         private static AsyncCircuitBreakerPolicy<IActionResult> _circuitBreaker = Policy<IActionResult>.Handle<Exception>().
+                                                                                    /*CircuitBreakerAsync(2, TimeSpan.FromMinutes(1));*/
                                                                                     AdvancedCircuitBreakerAsync(0.5, TimeSpan.FromSeconds(30),
                                                                                                                     2, TimeSpan.FromMinutes(1));
         // Do obsługi zwracania wyjątków
@@ -31,6 +33,10 @@ namespace EShop.ApiGateway.Controllers
         private static AsyncRetryPolicy<IActionResult> _retryPolicy;
         // Do łączenia polityki wyjątków
         private static AsyncPolicyWrap<IActionResult> _wrapPolicy;
+        private static AsyncBulkheadPolicy _bulkhead = Policy.BulkheadAsync(1, 2, (ctx) => // 1 - ilość slotów wykonywalnych, 2 - ilość miejsc w kolejce
+        {
+            throw new Exception("All slots are filled.");
+        });
         #endregion
         public ProductController(IBusControl busControl, IRequestClient<GetProductById> requestClient)
         {
@@ -45,8 +51,10 @@ namespace EShop.ApiGateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(Guid productId)
         {
-            var circuitState = _circuitBreaker.CircuitState;
-            return await /*_wrapPolicy*/_fallbackPolicy.WrapAsync(_wrapPolicy).ExecuteAsync(async () =>
+            //var circuitState = _circuitBreaker.CircuitState;
+            var emptyExecutionSlots = _bulkhead.BulkheadAvailableCount;
+            var emptyQueueSlots = _bulkhead.QueueAvailableCount;
+            return await /*_wrapPolicy*//*_fallbackPolicy.WrapAsync(_wrapPolicy)*/_bulkhead.ExecuteAsync(async () =>
             {
                 var prdct = new GetProductById()
                 {
