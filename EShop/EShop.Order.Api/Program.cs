@@ -1,3 +1,8 @@
+using EShop.Infrastructure.EventBus;
+using EShop.Infrastructure.Mongo;
+using EShop.Order.Api.Handlers;
+using MassTransit;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +12,36 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// MongoDB
+builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
+// RabbitMQ and MassTransit
+var rabbitMQOption = builder.Configuration.GetSection("rabbitmq").Get<RabbitMQOption>();
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateOrderHandler>();
+    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+    {
+        cfg.Host(new Uri(rabbitMQOption.ConnectionString), hostcfg =>
+        {
+            hostcfg.Username(rabbitMQOption.Username);
+            hostcfg.Password(rabbitMQOption.Password);
+        });
+        cfg.ReceiveEndpoint("create_order", endPoint =>
+        {
+            endPoint.PrefetchCount = 16;
+            endPoint.UseMessageRetry(retryConfig =>
+            {
+                retryConfig.Interval(2, 100);
+            });
+            endPoint.ConfigureConsumer<CreateOrderHandler>(provider);
+        });
+    }));
+});
+
 var app = builder.Build();
+
+var busControl = app.Services.GetService<IBusControl>();
+busControl.Start();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
