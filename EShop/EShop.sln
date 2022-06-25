@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.User.Query.Api", "ESh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Apigateway.Test", "EShop.Apigateway.Test\EShop.Apigateway.Test.csproj", "{C569C6CB-9CDC-450C-9E61-2A23920FF1AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.User.Query.Api.Test", "EShop.User.Query.Api.Test\EShop.User.Query.Api.Test.csproj", "{7A995C0C-CA1E-4ECE-99C6-85761C96077A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.User.Query.Api.Test", "EShop.User.Query.Api.Test\EShop.User.Query.Api.Test.csproj", "{7A995C0C-CA1E-4ECE-99C6-85761C96077A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Cart.Api", "EShop.Cart.Api\EShop.Cart.Api.csproj", "{DC6EDD85-D1D5-44AE-9122-9A74302EEC55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{7A995C0C-CA1E-4ECE-99C6-85761C96077A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A995C0C-CA1E-4ECE-99C6-85761C96077A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A995C0C-CA1E-4ECE-99C6-85761C96077A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC6EDD85-D1D5-44AE-9122-9A74302EEC55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6EDD85-D1D5-44AE-9122-9A74302EEC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6EDD85-D1D5-44AE-9122-9A74302EEC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6EDD85-D1D5-44AE-9122-9A74302EEC55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
