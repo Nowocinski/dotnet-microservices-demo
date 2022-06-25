@@ -14,7 +14,7 @@ namespace EShop.Cart.DataProvider.Repository
         {
             try
             {
-                await _distributedCache.SetStringAsync(cart.UserId, JsonConvert.SerializeObject(cart));
+                await _distributedCache.SetStringAsync(cart.UserId, JsonConvert.SerializeObject(cart)); // klucz, obiekt
                 return true;
             }
             catch (Exception ex)
