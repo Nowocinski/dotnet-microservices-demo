@@ -14,7 +14,7 @@
         {
             if (!context.Wallets.Any())
             {
-                Console.WriteLine("Seeding data.");
+                Console.WriteLine("Seeding data to wallets.");
                 context.Wallets.AddRange(new Models.Wallet
                 {
                     UserId = Guid.NewGuid(),
@@ -25,7 +25,7 @@
             }
             else
             {
-                Console.WriteLine("We already have data.");
+                Console.WriteLine("We already have data in wallets.");
             }
         }
     }

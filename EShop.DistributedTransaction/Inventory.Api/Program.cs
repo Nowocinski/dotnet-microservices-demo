@@ -1,7 +1,5 @@
+using Inventory.Api.Context;
 using Microsoft.EntityFrameworkCore;
-using Wallet.Api.Context;
-using Wallet.Api.Repository;
-using Wallet.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,17 +10,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DI
-builder.Services.AddScoped<IWalletRepository, WalletRepository>();
-builder.Services.AddScoped<IWalletService, WalletService>();
 // Databse in memory
 builder.Services.AddDbContext<DataBaseContext>(options =>
-    options.UseInMemoryDatabase("InMemoryWallet"));
+    options.UseInMemoryDatabase("InMemoryInventor"));
 
 var app = builder.Build();
 
 // Seeder
-WalletDataSeeder.PerpPopulation(app);
+InventorDataSeeder.PerpPopulation(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

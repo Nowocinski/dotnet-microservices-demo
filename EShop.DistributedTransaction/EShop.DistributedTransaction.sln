@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Api", "Wallet.Api\Wallet.Api.csproj", "{B2D0DBEF-4E96-4A6D-8E3B-F027AD59902F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Api", "Inventory.Api\Inventory.Api.csproj", "{79137EAA-21AE-4758-9843-D7519F0D6DE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B2D0DBEF-4E96-4A6D-8E3B-F027AD59902F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2D0DBEF-4E96-4A6D-8E3B-F027AD59902F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2D0DBEF-4E96-4A6D-8E3B-F027AD59902F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79137EAA-21AE-4758-9843-D7519F0D6DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79137EAA-21AE-4758-9843-D7519F0D6DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79137EAA-21AE-4758-9843-D7519F0D6DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79137EAA-21AE-4758-9843-D7519F0D6DE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
