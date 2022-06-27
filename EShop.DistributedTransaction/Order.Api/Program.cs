@@ -1,7 +1,7 @@
-using Inventory.Api.Context;
-using Inventory.Api.Repository;
-using Inventory.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Order.Api.Context;
+using Order.Api.Repository;
+using Order.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,16 +13,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DI
-builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
-builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 // Databse in memory
 builder.Services.AddDbContext<DataBaseContext>(options =>
-    options.UseInMemoryDatabase("InMemoryInventor"));
+    options.UseInMemoryDatabase("InMemoryOrder"));
 
 var app = builder.Build();
-
-// Seeder
-InventorDataSeeder.PerpPopulation(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

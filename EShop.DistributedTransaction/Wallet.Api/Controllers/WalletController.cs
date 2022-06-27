@@ -27,7 +27,7 @@ namespace Wallet.Api.Controllers
             return userWallet;
         }
 
-        [HttpGet("GetWallet")]
+        [HttpGet("GetWallets")]
         public async Task<object> Get()
         {
             return await _context.Wallets.ToListAsync(); ;
