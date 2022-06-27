@@ -1,6 +1,8 @@
 using EShop.Infrastructure.EventBus;
 using EShop.Infrastructure.Mongo;
 using EShop.Wallet.Api.Handlers;
+using EShop.Wallet.DataProvider.Repository;
+using EShop.Wallet.DataProvider.Services;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// DI
+builder.Services.AddScoped<IWalletRepository, WalletRepository>();
+builder.Services.AddScoped<IWalletService, WalletService>();
 // MongoDB
 builder.Services.AddMongoDb(builder.Configuration.GetSection("mongo").Get<MongoConfig>());
 // MassTransit and RabbitMQ

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EShop.Infrastructure\EShop.Infrastructure.csproj" />
+    <ProjectReference Include="..\EShop.Wallet.DataProvider\EShop.Wallet.DataProvider.csproj" />
   </ItemGroup>
 
 </Project>
