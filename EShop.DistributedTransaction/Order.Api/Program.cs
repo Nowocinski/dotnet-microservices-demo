@@ -1,5 +1,7 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Order.Api.Context;
+using Order.Api.EventBus;
 using Order.Api.Repository;
 using Order.Api.Services;
 
@@ -18,8 +20,29 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 // Databse in memory
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseInMemoryDatabase("InMemoryOrder"));
+// MassTransit and RabbieMQ
+var rabbitMq = new RabbitMqOption();
+builder.Configuration.GetSection("rabbitmq").Bind(rabbitMq);
+builder.Services.AddMassTransit(x => {
+    //x.AddConsumersFromNamespaceContaining<CreateOrderHandler>();
+    //x.AddActivitiesFromNamespaceContaining<RoutingActivities>();
+    x.SetKebabCaseEndpointNameFormatter();
+    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+    {
+        cfg.Host(new Uri(rabbitMq.ConnectionString), hostconfig =>
+        {
+            hostconfig.Username(rabbitMq.Username);
+            hostconfig.Password(rabbitMq.Password);
+        });
+
+        cfg.ConfigureEndpoints(provider);
+    }));
+});
 
 var app = builder.Build();
+
+var busControl = app.Services.GetService<IBusControl>();
+busControl.Start();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
