@@ -1,4 +1,5 @@
 ﻿using EventBus.Activities;
+using Inventory.Api.Command;
 using MassTransit;
 using MassTransit.Courier.Contracts;
 
@@ -41,6 +42,10 @@ namespace Order.Api.Handlers
             string walletActivityQueueName = _endpointNameFormatter.ExecuteActivity<WalletActivity, TransactMoney>();
             routingSlipBuilder.AddActivity("PROCESS_WALLET", new Uri($"queue:{walletActivityQueueName}"),
                     new { order.Id, /*order.Amount*/ });
+
+            // Allocate Product Activity
+            string allocateProductActivityQueueName = _endpointNameFormatter.ExecuteActivity<AllocateProductActivity, AllocateProduct>();
+            routingSlipBuilder.AddActivity("ALLOCATE_PRODUCT", new Uri($"queue:{allocateProductActivityQueueName}"), new { });
 
 
             return routingSlipBuilder.Build();
