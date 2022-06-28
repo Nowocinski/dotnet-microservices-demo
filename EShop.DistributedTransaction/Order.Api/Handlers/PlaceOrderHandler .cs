@@ -6,6 +6,11 @@ namespace Order.Api.Handlers
 {
     public class PlaceOrderHandler : IConsumer<Models.Order>
     {
+        private readonly IEndpointNameFormatter _endpointNameFormatter;
+        public PlaceOrderHandler(IEndpointNameFormatter endpointNameFormatter)
+        {
+            _endpointNameFormatter = endpointNameFormatter;
+        }
         public async Task Consume(ConsumeContext<Models.Order> context)
         {
             try
@@ -28,9 +33,15 @@ namespace Order.Api.Handlers
             routingSlipBuilder.AddVariable("PlacedOrder", order);
 
             // Wallet Activity 
-            //string walletActivityQueueName = _endpointNameFormatter.ExecuteActivity<WalletActivity, TransactMoney>();
-            routingSlipBuilder.AddActivity("PROCESS_WALLET", new Uri($"queue:wallet_execute"),
-                    new { order.Id, /*order.Amount */});
+            // Sposób nr 1
+            //routingSlipBuilder.AddActivity("PROCESS_WALLET", new Uri($"queue:wallet_execute"),
+            //        new { order.Id, /*order.Amount */});
+
+            // Sposób nr 2
+            string walletActivityQueueName = _endpointNameFormatter.ExecuteActivity<WalletActivity, TransactMoney>();
+            routingSlipBuilder.AddActivity("PROCESS_WALLET", new Uri($"queue:{walletActivityQueueName}"),
+                    new { order.Id, /*order.Amount*/ });
+
 
             return routingSlipBuilder.Build();
         }

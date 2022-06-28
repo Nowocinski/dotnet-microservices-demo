@@ -19,6 +19,8 @@ namespace Wallet.Api.Handlers
             //    await Task.CompletedTask;
             //else
             //    throw new Exception("Funds are not deducted. Try after sometime.");
+            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
     }
 }
