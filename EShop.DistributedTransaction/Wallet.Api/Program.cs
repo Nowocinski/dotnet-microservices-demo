@@ -1,5 +1,8 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Wallet.Api.Context;
+using Wallet.Api.EventBus;
+using Wallet.Api.Handlers;
 using Wallet.Api.Repository;
 using Wallet.Api.Services;
 
@@ -18,8 +21,37 @@ builder.Services.AddScoped<IWalletService, WalletService>();
 // Databse in memory
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseInMemoryDatabase("InMemoryWallet"));
+var rabbitmqConfig = new RabbitMqOption();
+builder.Configuration.GetSection("rabbitmq").Bind(rabbitmqConfig);
+builder.Services.AddMassTransit(x => {
+    x.AddConsumersFromNamespaceContaining<AddFundsConsumer>();
+
+    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg => {
+        cfg.Host(new Uri(rabbitmqConfig.ConnectionString), hostConfig =>
+        {
+            hostConfig.Username(rabbitmqConfig.Username);
+            hostConfig.Password(rabbitmqConfig.Password);
+        });
+
+        cfg.ReceiveEndpoint("add_funds", ep => {
+            ep.PrefetchCount = 16;
+            ep.UseMessageRetry(retryConfig => { retryConfig.Interval(2, 100); });
+            ep.ConfigureConsumer<AddFundsConsumer>(provider);
+        });
+
+        cfg.ReceiveEndpoint("deduct_funds", ep => {
+            ep.PrefetchCount = 16;
+            ep.UseMessageRetry(retryConfig => { retryConfig.Interval(2, 100); });
+            ep.ConfigureConsumer<DeductFundsConsumer>(provider);
+        });
+
+    }));
+});
 
 var app = builder.Build();
+
+var busControl = app.Services.GetService<IBusControl>();
+busControl.Start();
 
 // Seeder
 WalletDataSeeder.PerpPopulation(app);

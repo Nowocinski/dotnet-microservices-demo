@@ -1,3 +1,4 @@
+using EventBus.Activities;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Order.Api.Context;
@@ -26,6 +27,7 @@ var rabbitMq = new RabbitMqOption();
 builder.Configuration.GetSection("rabbitmq").Bind(rabbitMq);
 builder.Services.AddMassTransit(x => {
     x.AddConsumer<PlaceOrderHandler>();
+    x.AddActivitiesFromNamespaceContaining<IRoutingActivities>();
     x.SetKebabCaseEndpointNameFormatter();
     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
     {
